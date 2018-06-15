@@ -217,10 +217,9 @@ var game = new Phaser.Game(w,h, Phaser.CANVAS, 'phaser-example', { preload: prel
 
 function preload() {
 
-
-
-
-   game.load.spritesheet('btup', 'button_sprite_sheet.png', 193, 71);
+   game.load.image('btup', 'UP.png');
+   //game.load.spritesheet('btup', 'button_sprite_sheet.png', 193, 71);
+   //game.load.spritesheet('btup', 'button_sprite_sheet.png', 193, 71);
 
    game.load.spritesheet('btizq', 'button_sprite_sheet.png', 193, 71);
       game.load.spritesheet('btder', 'button_sprite_sheet.png', 193, 71);
@@ -277,7 +276,7 @@ function create() {
 
  //game.physics.p2.enable(tank);
 
- game.camera.follow(tank);
+// game.camera.follow(tank);
 
 
   tank = game.add.sprite(0, 0, 'tank', 'tank1');
@@ -365,7 +364,7 @@ function create() {
        joystick = gamepad1.addJoystick(w/2-200, h/2+70, 1.2, 'gamepad');
         
         // Add a button to the game (only one is allowed right now)
-       button = gamepad1.addButton(w/2+50, h/2+70, 1.0, 'gamepad');
+       button = gamepad1.addButton(w/2+100, h/2-50, 1.0, 'gamepad');
 
 
 
@@ -410,7 +409,7 @@ fireaudio=  game.add.audio('fire');
 
 
 
-    btup = game.add.button(w/2, h/2, 'btup', actionOnClick, this, 2, 1, 0);
+    btup = game.add.button(w/2-22, h/2, 'btup', actionOnClick, this, 2, 1, 0);
 
     btup.onInputOver.add(over, this);
    btup.onInputOut.add(out, this);
@@ -419,15 +418,16 @@ fireaudio=  game.add.audio('fire');
   btup.fixedToCamera =true;
 
 
-   btizq = game.add.button(w/2-80, h/2+70, 'btizq', actionOnClick, this, 2, 1, 0);
+   btizq = game.add.button(w/2-80, h/2+70, 'btup', actionOnClick, this, 2, 1, 0);
+   btizq.rotation=4.71239;
 
 
   btizq.onInputDown.add(btizqa, this);
   btizq.fixedToCamera =true;
 
-   btder = game.add.button(w/2+80, h/2+70, 'btder', actionOnClick, this, 2, 1, 0);
+   btder = game.add.button(w/2+80, h/2+34, 'btup', actionOnClick, this, 2, 1, 0);
 
-
+   btder.rotation=1.5708;
   btder.onInputDown.add(btdera, this);
    btder.fixedToCamera =true;
 
@@ -455,7 +455,7 @@ function removeLogo () {
 
 function update() {
 
-
+game.camera.position=tank.position;
  game.physics.arcade.overlap(enemyBullets, tank, bulletHitPlayer, null, this);
 
     enemiesAlive = 0;
@@ -632,11 +632,13 @@ function fire () {
 
 
 function up() {
-    console.log('button up', arguments);
+     currentSpeed = 300;
+    //console.log('button up', arguments);
 }
 
 function over() {
-    console.log('button over');
+    currentSpeed = 300;
+   // console.log('button over');
 }
 
 function out() {
